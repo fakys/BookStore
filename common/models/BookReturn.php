@@ -32,6 +32,11 @@ class BookReturn extends \yii\db\ActiveRecord
         return 'book_returns';
     }
 
+    public static function ruTableName()
+    {
+        return 'Возврат книг';
+    }
+
     /**
      * {@inheritdoc}
      */

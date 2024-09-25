@@ -76,6 +76,6 @@ class Worker extends \yii\db\ActiveRecord
 
     public function getPosition()
     {
-        return $this->hasOne(Positions::class, ['id' => 'position_id']);
+        return $this->hasOne(Position::class, ['id' => 'position_id']);
     }
 }

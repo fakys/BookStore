@@ -1,0 +1,9 @@
+.index-table{
+    width: 500px;
+    height: 400px;
+
+}
+.card-body{
+    max-height: 330px;
+    overflow: auto;
+}

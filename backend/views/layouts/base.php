@@ -106,14 +106,7 @@ use yii\helpers\Url;
                 </div>
                 <div>
                     <div>
-                        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="fa fa-book nav-icon" aria-hidden="true"></i>
-                                    <p>Language Menu</p>
-                                </a>
-                            </li>
-                        </ul>
+                    <?=\backend\components\SidebarComponent::widget()?>
                     </div>
                 </div>
             </div>
