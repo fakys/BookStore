@@ -22,6 +22,7 @@ class m240925_110446_create_clients_table extends Migration
             'email'=>$this->string()->unique(),
             'avatar'=>$this->string()->null(),
             'unique_key'=>$this->string()->unique(),
+            'password'=>$this->string(),
             'created_at'=>$this->dateTime()->null(),
             'updated_at'=>$this->dateTime()->null()
         ]);

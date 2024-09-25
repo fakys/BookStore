@@ -79,9 +79,9 @@ class m240925_104135_create_books_authors_categories_tables extends Migration
      */
     public function safeDown()
     {
-        $this->dropTable('{{%books}}');
-        $this->dropTable('{{%authors}}');
-        $this->dropTable('{{%categories}}');
         $this->dropTable('{{%books_photos}}');
+        $this->dropTable('{{%books}}');
+        $this->dropTable('{{%categories}}');
+        $this->dropTable('{{%authors}}');
     }
 }

@@ -48,7 +48,8 @@ class m240925_104720_create_orders_issued_orders_accepted_orders_tables extends 
      */
     public function safeDown()
     {
-        $this->dropTable('{{%orders}}');
         $this->dropTable('{{%issued_orders}}');
+        $this->dropTable('{{%orders}}');
+
     }
 }

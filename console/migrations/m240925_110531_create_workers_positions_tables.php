@@ -31,6 +31,7 @@ class m240925_110531_create_workers_positions_tables extends Migration
             'avatar'=>$this->string()->null(),
             'position_id'=>$this->bigInteger()->null(),
             'unique_key'=>$this->string()->unique(),
+            'password'=>$this->string(),
             'created_at'=>$this->dateTime()->null(),
             'updated_at'=>$this->dateTime()->null()
         ]);
