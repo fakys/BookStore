@@ -3,7 +3,27 @@
     height: 400px;
 
 }
-.card-body{
+.index-table-body{
     max-height: 330px;
+    overflow: auto;
+}
+.pages-items{
+    display: flex;
+}
+.page-item{
+    cursor: pointer;
+    user-select: none;
+}
+.row-object{
+    display: none;
+}
+.active-row{
+    display: table-row;
+}
+.active-paginate{
+    background: var(--primary);
+    color: white;
+}
+.card-body{
     overflow: auto;
 }

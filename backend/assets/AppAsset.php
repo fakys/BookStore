@@ -18,7 +18,8 @@ class AppAsset extends AssetBundle
     ];
     public $js = [
         'js/adminlte.js',
-        'js/jq_main.js'
+        'js/jq_main.js',
+        'js/paginate.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

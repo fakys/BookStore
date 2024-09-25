@@ -30,12 +30,14 @@ class DataModelBehavior extends Behavior
     {
         return $this->data_model;
     }
-    public function getMainFields()
+    public function getModelByName($table)
     {
-        $main_fields = [];
+
         foreach ($this->data_model as $value){
-            $main_fields[$value::tableName()] =array_slice((new $value())->attributeLabels(), 0,3);
+            if($value::tableName() == $table){
+                return $value;
+            }
         }
-        return $main_fields;
+        return '';
     }
 }

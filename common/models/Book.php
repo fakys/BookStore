@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\components\traits\ModelsTrait;
 use Yii;
 
 /**
@@ -23,13 +24,11 @@ use Yii;
  * @property Author $author
  * @property BookPhoto[] $booksPhotos
  * @property Category $category
- * @property Orders[] $orders
+ * @property Order[] $orders
  */
 class Book extends \yii\db\ActiveRecord
 {
-    /**
-     * {@inheritdoc}
-     */
+    use ModelsTrait;
     public static function tableName()
     {
         return 'books';
@@ -59,9 +58,23 @@ class Book extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    public static function getMainFields()
+    {
+        return [
+            'id',
+            'name',
+            'description',
+        ];
+    }
+
+    public function getSearchFields()
+    {
+        return [
+            'name',
+            'description',
+            'unique_key'
+        ];
+    }
     public function attributeLabels()
     {
         return [

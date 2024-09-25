@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\components\traits\ModelsTrait;
 use Yii;
 
 /**
@@ -29,6 +30,7 @@ use Yii;
  */
 class Order extends \yii\db\ActiveRecord
 {
+    use ModelsTrait;
     /**
      * {@inheritdoc}
      */
@@ -61,6 +63,25 @@ class Order extends \yii\db\ActiveRecord
         ];
     }
 
+    public static function getMainFields()
+    {
+        return [
+            'id',
+            'number',
+            'dispatch_date',
+        ];
+    }
+
+
+    public function getSearchFields()
+    {
+        return [
+            'number',
+            'dispatch_date',
+            'arrival_date',
+            'unique_key'
+        ];
+    }
     /**
      * {@inheritdoc}
      */

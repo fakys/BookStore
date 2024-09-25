@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\components\traits\ModelsTrait;
 use Yii;
 
 /**
@@ -24,6 +25,7 @@ use Yii;
  */
 class BookReturn extends \yii\db\ActiveRecord
 {
+    use ModelsTrait;
     /**
      * {@inheritdoc}
      */
@@ -53,6 +55,22 @@ class BookReturn extends \yii\db\ActiveRecord
             [['condition_book_id'], 'exist', 'skipOnError' => true, 'targetClass' => ConditionBook::class, 'targetAttribute' => ['condition_book_id' => 'id']],
             [['order_id'], 'exist', 'skipOnError' => true, 'targetClass' => Order::class, 'targetAttribute' => ['order_id' => 'id']],
             [['worker_id'], 'exist', 'skipOnError' => true, 'targetClass' => Worker::class, 'targetAttribute' => ['worker_id' => 'id']],
+        ];
+    }
+
+    public static function getMainFields()
+    {
+        return [
+            'id',
+            'number_returns',
+            'date_return',
+        ];
+    }
+    public function getSearchFields()
+    {
+        return [
+            'number_returns',
+            'date_return',
         ];
     }
 

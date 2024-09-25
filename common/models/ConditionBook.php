@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\components\traits\ModelsTrait;
 use Yii;
 
 /**
@@ -19,6 +20,7 @@ use Yii;
  */
 class ConditionBook extends \yii\db\ActiveRecord
 {
+    use ModelsTrait;
     /**
      * {@inheritdoc}
      */
@@ -44,6 +46,24 @@ class ConditionBook extends \yii\db\ActiveRecord
             [['name', 'unique_key'], 'string', 'max' => 255],
             [['name'], 'unique'],
             [['unique_key'], 'unique'],
+        ];
+    }
+
+    public static function getMainFields()
+    {
+        return [
+            'id',
+            'name',
+            'description',
+        ];
+    }
+
+    public function getSearchFields()
+    {
+        return [
+            'name',
+            'description',
+            'unique_key'
         ];
     }
 

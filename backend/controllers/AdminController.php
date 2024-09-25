@@ -18,12 +18,24 @@ class AdminController extends Controller
     }
     public function actionIndex()
     {
-        return $this->render('index', ['models' => $this->getAllModel(), 'fields'=>$this->getMainFields()]);
+        return $this->render('index', ['models' => $this->getAllModel()]);
     }
 
     public function actionShow($table)
     {
-        $model = $this->getModelByName($table);
+        if($this->getModelByName($table)){
+            $model = new($this->getModelByName($table))();
+            $search = \Yii::$app->request->get('search');
+            if($search){
+                $data = $model->Search($search);
+            }else{
+                $data = $model->find()->asArray()->all();
+            }
+            return $this->render('show', ['model'=>$model, 'data'=>$data, 'search'=>$search]);
+        }else{
+            $this->response->setStatusCode(404);
+        }
+
     }
 
 }

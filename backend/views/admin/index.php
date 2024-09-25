@@ -13,12 +13,14 @@
                 <h3 class="card-title"><?=$model::ruTableName()?></h3>
             </div>
             <!-- /.card-header -->
-            <div class="card-body">
+            <div class="card-body index-table-body" >
                 <table class="table table-bordered">
                     <thead>
                     <tr>
-                        <?php foreach ($fields[$model::tableName()] as $field):?>
-                            <th><?=$field?></th>
+                        <?php foreach ((new $model())->attributeLabels() as $field=>$val):?>
+                            <?php if(in_array($field, $model::getMainFields())):?>
+                                <th><?=\backend\helpers\Str::limit($val, 10)?></th>
+                            <?php endif;?>
                         <?php endforeach;?>
                     </tr>
                     </thead>
@@ -26,8 +28,8 @@
                     <tr>
                         <?php foreach ($model::find()->asArray()->all() as $data):?>
                             <?php foreach ($data as $key=>$val):?>
-                                <?php if(isset($fields[$model::tableName()][$key])):?>
-                                    <td><?=$val?></td>
+                                <?php if(in_array($key, $model::getMainFields())):?>
+                                    <td><?=\backend\helpers\Str::limit($val, 10)?></td>
                                 <?php endif;?>
                             <?php endforeach;?>
                         <?php endforeach;?>

@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\components\traits\ModelsTrait;
 use Yii;
 
 /**
@@ -23,6 +24,7 @@ use Yii;
  */
 class Client extends \yii\db\ActiveRecord
 {
+    use ModelsTrait;
     /**
      * {@inheritdoc}
      */
@@ -36,6 +38,17 @@ class Client extends \yii\db\ActiveRecord
         return 'Клиенты';
     }
 
+    public function getSearchFields()
+    {
+        return [
+            'name',
+            'surname',
+            'passport_series',
+            'passport_number',
+            'email',
+        ];
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -47,6 +60,15 @@ class Client extends \yii\db\ActiveRecord
             [['surname', 'patronymic', 'passport_series', 'passport_number', 'email', 'avatar', 'unique_key'], 'string', 'max' => 255],
             [['email'], 'unique'],
             [['unique_key'], 'unique'],
+        ];
+    }
+
+    public static function getMainFields()
+    {
+        return [
+            'id',
+            'name',
+            'surname',
         ];
     }
 

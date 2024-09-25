@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\components\traits\ModelsTrait;
 use Yii;
 
 /**
@@ -17,6 +18,7 @@ use Yii;
  */
 class Category extends \yii\db\ActiveRecord
 {
+    use ModelsTrait;
     /**
      * {@inheritdoc}
      */
@@ -30,6 +32,8 @@ class Category extends \yii\db\ActiveRecord
         return 'Категории';
     }
 
+
+
     /**
      * {@inheritdoc}
      */
@@ -39,6 +43,22 @@ class Category extends \yii\db\ActiveRecord
             [['created_at', 'updated_at'], 'safe'],
             [['name', 'unique_key'], 'string', 'max' => 255],
             [['unique_key'], 'unique'],
+        ];
+    }
+
+    public static function getMainFields()
+    {
+        return [
+            'id',
+            'name',
+            'unique_key',
+        ];
+    }
+    public function getSearchFields()
+    {
+        return [
+            'name',
+            'unique_key',
         ];
     }
 

@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\components\traits\ModelsTrait;
 use Yii;
 
 /**
@@ -21,6 +22,7 @@ use Yii;
  */
 class Author extends \yii\db\ActiveRecord
 {
+    use ModelsTrait;
     /**
      * {@inheritdoc}
      */
@@ -48,6 +50,14 @@ class Author extends \yii\db\ActiveRecord
         ];
     }
 
+    public static function getMainFields()
+    {
+        return [
+            'id',
+            'name',
+            'surname',
+        ];
+    }
 
     /**
      * {@inheritdoc}
@@ -64,6 +74,16 @@ class Author extends \yii\db\ActiveRecord
             'unique_key' => 'Уникальный ключ',
             'created_at' => 'Время создания',
             'updated_at' => 'Время обновления',
+        ];
+    }
+
+    public function getSearchFields()
+    {
+        return [
+            'name',
+            'surname',
+            'email',
+            'unique_key',
         ];
     }
 

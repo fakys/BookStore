@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\components\traits\ModelsTrait;
 use Yii;
 
 /**
@@ -23,6 +24,7 @@ use Yii;
  */
 class Worker extends \yii\db\ActiveRecord
 {
+    use ModelsTrait;
     /**
      * {@inheritdoc}
      */
@@ -50,6 +52,27 @@ class Worker extends \yii\db\ActiveRecord
             [['email'], 'unique'],
             [['unique_key'], 'unique'],
             [['position_id'], 'exist', 'skipOnError' => true, 'targetClass' => Position::class, 'targetAttribute' => ['position_id' => 'id']],
+        ];
+    }
+
+    public function getSearchFields()
+    {
+        return [
+            'name',
+            'surname',
+            'email',
+            'passport_series',
+            'passport_number',
+            'unique_key'
+        ];
+    }
+
+    public static function getMainFields()
+    {
+        return [
+            'id',
+            'name',
+            'surname'
         ];
     }
 
