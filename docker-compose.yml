@@ -30,3 +30,14 @@ services:
       - POSTGRES_PASSWORD=root
     volumes:
       - ./tmp/db:/var/lib/postgresql
+    ports:
+      - "5432:5432"
+
+  pgadmin4:
+    image: dpage/pgadmin4:latest
+    environment:
+      PGADMIN_DEFAULT_EMAIL: 'fakysgg@gmail.com'
+      PGADMIN_DEFAULT_PASSWORD: 'root'
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    ports:
+      - "5050:80"
