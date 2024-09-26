@@ -11,6 +11,10 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
+    'aliases'=>[
+        '@default_user_ava'=>'image/user/default_user_ava.png',
+        '@FrontendWeb'=>'http://localhost:20080'
+    ],
     'modules' => [],
     'components' => [
         'request' => [
@@ -43,7 +47,8 @@ return [
             'showScriptName' => false,
             'rules' => [
                 'admin/show/<table>'=>'admin/show',
-                'admin/create/<table>'=>'admin/create'
+                'admin/create/<table>'=>'admin/create',
+                'admin/show-table/<table>/<key>'=>'admin/show-table',
             ],
         ],
 

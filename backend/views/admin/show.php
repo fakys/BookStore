@@ -2,6 +2,8 @@
 /**
  * @var \yii\db\ActiveRecord $model
  * @var array $data
+ * @var string $search
+ * @var string $field
  */
 ?>
 
@@ -82,7 +84,7 @@
                         </th>
                         <?php foreach ($val as $field=>$value):?>
                             <?php if(in_array($field, $model->getMainFields())):?>
-                                <th><a href="#"> <?=\backend\helpers\Str::limit($value, 15)?></a></th>
+                                <th><a href="<?=\yii\helpers\Url::to(['admin/show-table', 'table'=>$model::tableName(), 'key'=>$val['unique_key']])?>"> <?=\backend\helpers\Str::limit($value, 15)?></a></th>
                             <?php else:?>
                                 <th><?=\backend\helpers\Str::limit($value, 15)?></th>
                             <?php endif;?>

@@ -67,4 +67,15 @@ class AdminController extends Controller
         }
     }
 
+    public function actionShowTable($table, $key)
+    {
+        if($this->getModelByName($table)){
+            $model = $this->getModelByName($table)::find()->where(['unique_key'=>$key])->one();
+            if($model){
+                return $this->render('show_table', ['model'=>$model]);
+            }
+        }
+        \Yii::$app->response->setStatusCode(404);
+    }
+
 }
