@@ -23,13 +23,13 @@ services:
       - ./:/app
 
   pgsql:
-    image: postgres:latest
+    image: postgres
     environment:
       - POSTGRES_DB=book_store
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=root
     volumes:
-      - ./tmp/db:/var/lib/postgresql
+      - ./tmp/db:/var/lib/postgresql/data
     ports:
       - "5432:5432"
 
@@ -38,6 +38,7 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: 'fakysgg@gmail.com'
       PGADMIN_DEFAULT_PASSWORD: 'root'
-      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    depends_on:
+      - pgsql
     ports:
       - "5050:80"
