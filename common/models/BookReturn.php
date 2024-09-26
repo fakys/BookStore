@@ -52,6 +52,7 @@ class BookReturn extends \yii\db\ActiveRecord
             [['number_returns', 'unique_key'], 'string', 'max' => 255],
             [['number_returns'], 'unique'],
             [['unique_key'], 'unique'],
+            ['condition_book_id', 'has_returns']
         ];
     }
 
@@ -63,12 +64,36 @@ class BookReturn extends \yii\db\ActiveRecord
             'date_return',
         ];
     }
+
+    protected function checkIssued()
+    {
+        $issued = IssuedOrder::find()->where(['order_id'=>$this->order_id])->all();
+        if($issued && $this->will_return){
+            foreach ($issued as $value){
+                $value->delete();
+            }
+        }
+    }
+
+    public function has_returns()
+    {
+        $ConditionBook = ConditionBook::find()->where(['unique_key'=>$this->condition_book_id])->one();
+        if(!$ConditionBook||!$ConditionBook->returnable){
+            $this->addError('condition_book_id', 'Товар не подлежит к возврату !!');
+            return false;
+        }
+        return true;
+    }
     public function beforeSave($insert)
     {
+
+        $this->number_returns = uniqid();
         $this->create_fk(Order::class, 'order_id');
         $this->create_fk(Worker::class, 'worker_id');
         $this->create_fk(ConditionBook::class, 'condition_book_id');
         $this->create_unique_key();
+        if($this->will_return)$this->get_date('date_return');
+        $this->checkIssued();
         return parent::beforeSave($insert);
     }
 

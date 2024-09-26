@@ -39,7 +39,7 @@ class IssuedOrder extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['order_id', 'date_issue'], 'required'],
+            [['order_id'], 'required'],
             [['order_id'], 'default', 'value' => null],
             [['date_issue', 'created_at', 'updated_at'], 'safe'],
             [['unique_key'], 'string', 'max' => 255],
@@ -60,6 +60,7 @@ class IssuedOrder extends \yii\db\ActiveRecord
     public function beforeSave($insert)
     {
         $this->create_fk(Order::class, 'order_id');
+        $this->get_date('date_issue');
         $this->create_unique_key();
         return parent::beforeSave($insert);
     }

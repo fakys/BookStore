@@ -1,6 +1,7 @@
 <?php
 namespace common\components\traits;
 
+use DateTime;
 use yii\behaviors\TimestampBehavior;
 use yii\db\Expression;
 use yii\helpers\ArrayHelper;
@@ -81,5 +82,10 @@ trait ModelsTrait
         if($obj){
             $this->$name = $obj['id'];
         }
+    }
+
+    protected function get_date($name)
+    {
+        $this->$name = (new DateTime())->format('Y-m-d H:i:s');
     }
 }

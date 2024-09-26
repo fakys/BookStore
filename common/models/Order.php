@@ -55,6 +55,8 @@ class Order extends \yii\db\ActiveRecord
             [['count'], 'integer'],
             [['sent', 'came'], 'boolean'],
             [['dispatch_date', 'arrival_date', 'created_at', 'updated_at'], 'safe'],
+            ['dispatch_date',  'compare', 'compareAttribute' => 'arrival_date',  'operator' => '<='],
+            ['arrival_date',  'compare', 'compareAttribute' => 'dispatch_date',  'operator' => '>='],
             [['number', 'unique_key'], 'string', 'max' => 255],
             [['number'], 'unique'],
             [['unique_key'], 'unique'],
@@ -152,5 +154,11 @@ class Order extends \yii\db\ActiveRecord
     public function getWorker()
     {
         return $this->hasOne(Worker::class, ['id' => 'worker_id']);
+    }
+
+    public function getBooksReturn()
+    {
+
+        return $this->hasMany(BookReturn::class, ['order_id' => 'id']);
     }
 }

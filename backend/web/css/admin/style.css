@@ -94,3 +94,8 @@
     color: var(--danger);
     font-size: 12px;
 }
+.image-show-table{
+    max-width: 250px;
+    max-height: 250px;
+    border-radius: 15px;
+}

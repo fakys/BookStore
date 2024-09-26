@@ -131,4 +131,11 @@ class Book extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Category::class, ['id' => 'category_id']);
     }
+
+    public function getOrders()
+    {
+        return $this->hasMany(Order::class, ['book_id' => 'id']);
+    }
+
+
 }

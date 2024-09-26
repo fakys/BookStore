@@ -9,6 +9,5 @@
 <?=$form->field($model, 'condition_book_id')->dropDownList(\yii\helpers\ArrayHelper::map(\common\models\ConditionBook::find()->asArray()->all(), 'unique_key', 'name'))?>
 
 <?=$form->field($model, 'will_return')->checkbox()?>
-<?=$form->field($model, 'date_return')->input('date')?>
 <input type="submit" class="btn btn-success" value="Создать">
 <?php \yii\widgets\ActiveForm::end()?>
