@@ -25,6 +25,8 @@ use Yii;
 class Worker extends \yii\db\ActiveRecord
 {
     use ModelsTrait;
+
+    public $password_confirm;
     /**
      * {@inheritdoc}
      */
@@ -44,26 +46,14 @@ class Worker extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['name', 'surname', 'password_confirm', 'password', 'patronymic', 'passport_series', 'passport_number', 'email'], 'required'],
             [['position_id'], 'default', 'value' => null],
-            [['position_id'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['name'], 'string', 'max' => 30],
             [['surname', 'patronymic', 'passport_series', 'passport_number', 'email', 'avatar', 'unique_key'], 'string', 'max' => 255],
             [['email'], 'unique'],
             [['unique_key'], 'unique'],
-            [['position_id'], 'exist', 'skipOnError' => true, 'targetClass' => Position::class, 'targetAttribute' => ['position_id' => 'id']],
-        ];
-    }
-
-    public function getSearchFields()
-    {
-        return [
-            'name',
-            'surname',
-            'email',
-            'passport_series',
-            'passport_number',
-            'unique_key'
+            ['password_confirm', 'compare', 'compareAttribute' => 'password'],
         ];
     }
 
@@ -91,6 +81,8 @@ class Worker extends \yii\db\ActiveRecord
             'email' => 'Email',
             'avatar' => 'Фотография',
             'position_id' => 'Должность',
+            'password'=>'Пароль',
+            'password_confirm'=>'Повторите пароль',
             'unique_key' => 'Уникальный ключ',
             'created_at' => 'Время создания',
             'updated_at' => 'Время обновления',
@@ -100,5 +92,14 @@ class Worker extends \yii\db\ActiveRecord
     public function getPosition()
     {
         return $this->hasOne(Position::class, ['id' => 'position_id']);
+    }
+
+    public function beforeSave($insert)
+    {
+        $this->upload_image('avatar', 'workers_image');
+        $this->create_fk(Position::class, 'position_id');
+        $this->create_unique_key();
+        $this->hashPassword();
+        return parent::beforeSave($insert);
     }
 }

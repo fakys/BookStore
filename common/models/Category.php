@@ -40,6 +40,7 @@ class Category extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            ['name','required'],
             [['created_at', 'updated_at'], 'safe'],
             [['name', 'unique_key'], 'string', 'max' => 255],
             [['unique_key'], 'unique'],
@@ -54,12 +55,10 @@ class Category extends \yii\db\ActiveRecord
             'unique_key',
         ];
     }
-    public function getSearchFields()
+    public function beforeSave($insert)
     {
-        return [
-            'name',
-            'unique_key',
-        ];
+        $this->create_unique_key();
+        return parent::beforeSave($insert);
     }
 
     /**

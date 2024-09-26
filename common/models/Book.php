@@ -29,6 +29,8 @@ use Yii;
 class Book extends \yii\db\ActiveRecord
 {
     use ModelsTrait;
+
+    public $photos;
     public static function tableName()
     {
         return 'books';
@@ -45,16 +47,15 @@ class Book extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['name', 'price'], 'required'],
             [['description'], 'string'],
             [['price'], 'number'],
             [['remainder', 'delivery_time_days', 'category_id', 'author_id'], 'default', 'value' => null],
-            [['remainder', 'delivery_time_days', 'category_id', 'author_id'], 'integer'],
+            [['remainder', 'delivery_time_days'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['name', 'article', 'unique_key'], 'string', 'max' => 255],
             [['article'], 'unique'],
-            [['unique_key'], 'unique'],
-            [['author_id'], 'exist', 'skipOnError' => true, 'targetClass' => Author::class, 'targetAttribute' => ['author_id' => 'id']],
-            [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::class, 'targetAttribute' => ['category_id' => 'id']],
+            [['unique_key'], 'unique']
         ];
     }
 
@@ -65,6 +66,22 @@ class Book extends \yii\db\ActiveRecord
             'name',
             'description',
         ];
+    }
+
+    public function beforeSave($insert)
+    {
+        $this->upload_image('avatar', 'authors_image');
+        $this->create_unique_key();
+        $this->create_fk(Author::class, 'author_id');
+        $this->create_fk(Category::class, 'category_id');
+        $this->article = uniqid();
+        return parent::beforeSave($insert);
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+        $this->upload_images('photos', 'book_image', BookPhoto::class, 'photo', 'book_id');
     }
     public function attributeLabels()
     {
@@ -79,6 +96,7 @@ class Book extends \yii\db\ActiveRecord
             'category_id' => 'Категория',
             'author_id' => 'Автор',
             'unique_key' => 'Уникальный ключ',
+            'photos'=>'Фотокрафии',
             'created_at' => 'Время создания',
             'updated_at' => 'Время обновления',
         ];

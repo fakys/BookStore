@@ -50,17 +50,26 @@ class Order extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['book_id', 'client_id', 'worker_id'], 'required'],
             [['book_id', 'count', 'client_id', 'worker_id'], 'default', 'value' => null],
-            [['book_id', 'count', 'client_id', 'worker_id'], 'integer'],
+            [['count'], 'integer'],
             [['sent', 'came'], 'boolean'],
             [['dispatch_date', 'arrival_date', 'created_at', 'updated_at'], 'safe'],
             [['number', 'unique_key'], 'string', 'max' => 255],
             [['number'], 'unique'],
             [['unique_key'], 'unique'],
-            [['book_id'], 'exist', 'skipOnError' => true, 'targetClass' => Book::class, 'targetAttribute' => ['book_id' => 'id']],
-            [['client_id'], 'exist', 'skipOnError' => true, 'targetClass' => Client::class, 'targetAttribute' => ['client_id' => 'id']],
-            [['worker_id'], 'exist', 'skipOnError' => true, 'targetClass' => Worker::class, 'targetAttribute' => ['worker_id' => 'id']],
         ];
+    }
+
+    public function beforeSave($insert)
+    {
+        $this->create_unique_key();
+        $this->create_fk(Client::class, 'client_id');
+        $this->create_fk(Worker::class, 'worker_id');
+        $this->create_fk(Book::class, 'book_id');
+        $this->number = uniqid();
+        return parent::beforeSave($insert);
+
     }
 
     public static function getMainFields()
@@ -73,15 +82,6 @@ class Order extends \yii\db\ActiveRecord
     }
 
 
-    public function getSearchFields()
-    {
-        return [
-            'number',
-            'dispatch_date',
-            'arrival_date',
-            'unique_key'
-        ];
-    }
     /**
      * {@inheritdoc}
      */

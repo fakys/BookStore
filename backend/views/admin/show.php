@@ -6,6 +6,7 @@
 ?>
 
 <div class="admin-table-show-page">
+    <div class="p-3"><a class="btn btn-success p-1" href="<?=\yii\helpers\Url::to(['admin/create', 'table'=>$model::tableName()])?>">Дбавить</a></div>
     <div class="card">
         <div class="card-header">
             <h3 class="card-title">Таблица "<?=$model::ruTableName()?>"</h3>
@@ -50,19 +51,40 @@
             <table id="example1" class="table table-bordered table-striped admin-table-show">
                 <thead>
                 <tr>
-                    <?php foreach ($model->attributeLabels() as $key=>$val):?>
-                        <th><?=\backend\helpers\Str::limit($val, 15)?></th>
+                    <th>Удалить</th>
+                    <?php foreach ($model->attributes() as $val):?>
+                        <?php if(isset($model->attributeLabels()[$val])):?>
+                            <th><?=\backend\helpers\Str::limit($model->attributeLabels()[$val], 15)?></th>
+                        <?php endif;?>
                     <?php endforeach;?>
                 </tr>
                 </thead>
                 <tbody>
                 <?php foreach ($data as $key=>$val):?>
                     <tr  class="row-object">
+                        <th>
+                            <div><button type="button" class="btn btn-danger p-1" data-bs-toggle="modal" data-bs-target="#exampleModal">Удалить</div></div>
+                            <div class="delete-alert">
+                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Вы уверены что хотите удплить этот элемент?</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                                                <a href="<?=\yii\helpers\Url::to(['admin/delete', 'table'=>$model::tableName(), 'key'=>$val['unique_key']])?>" type="button" class="btn btn-danger">Удалить</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                        </th>
                         <?php foreach ($val as $field=>$value):?>
                             <?php if(in_array($field, $model->getMainFields())):?>
                                 <th><a href="#"> <?=\backend\helpers\Str::limit($value, 15)?></a></th>
                             <?php else:?>
-                                <th><?=$value?></th>
+                                <th><?=\backend\helpers\Str::limit($value, 15)?></th>
                             <?php endif;?>
                         <?php endforeach;?>
                     </tr>

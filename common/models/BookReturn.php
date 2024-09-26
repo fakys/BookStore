@@ -45,16 +45,13 @@ class BookReturn extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['order_id', 'worker_id', 'condition_book_id'], 'required'],
             [['order_id', 'worker_id', 'condition_book_id'], 'default', 'value' => null],
-            [['order_id', 'worker_id', 'condition_book_id'], 'integer'],
             [['will_return'], 'boolean'],
             [['date_return', 'created_at', 'updated_at'], 'safe'],
             [['number_returns', 'unique_key'], 'string', 'max' => 255],
             [['number_returns'], 'unique'],
             [['unique_key'], 'unique'],
-            [['condition_book_id'], 'exist', 'skipOnError' => true, 'targetClass' => ConditionBook::class, 'targetAttribute' => ['condition_book_id' => 'id']],
-            [['order_id'], 'exist', 'skipOnError' => true, 'targetClass' => Order::class, 'targetAttribute' => ['order_id' => 'id']],
-            [['worker_id'], 'exist', 'skipOnError' => true, 'targetClass' => Worker::class, 'targetAttribute' => ['worker_id' => 'id']],
         ];
     }
 
@@ -66,12 +63,13 @@ class BookReturn extends \yii\db\ActiveRecord
             'date_return',
         ];
     }
-    public function getSearchFields()
+    public function beforeSave($insert)
     {
-        return [
-            'number_returns',
-            'date_return',
-        ];
+        $this->create_fk(Order::class, 'order_id');
+        $this->create_fk(Worker::class, 'worker_id');
+        $this->create_fk(ConditionBook::class, 'condition_book_id');
+        $this->create_unique_key();
+        return parent::beforeSave($insert);
     }
 
     /**

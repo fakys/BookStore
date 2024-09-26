@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\components\traits\ModelsTrait;
 use Yii;
 
 /**
@@ -18,6 +19,7 @@ use Yii;
  */
 class BookPhoto extends \yii\db\ActiveRecord
 {
+    use ModelsTrait;
     /**
      * {@inheritdoc}
      */

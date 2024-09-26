@@ -42,7 +42,8 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                'admin/show/<table>'=>'admin/show'
+                'admin/show/<table>'=>'admin/show',
+                'admin/create/<table>'=>'admin/create'
             ],
         ],
 

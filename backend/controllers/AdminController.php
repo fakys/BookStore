@@ -36,7 +36,35 @@ class AdminController extends Controller
         }else{
             $this->response->setStatusCode(404);
         }
+    }
 
+    public function actionCreate($table)
+    {
+        if($this->getModelByName($table)){
+            $model = new ($this->getModelByName($table))();
+            if(\Yii::$app->request->isPost){
+                $model->load(\Yii::$app->request->post());
+                if($model->save()){
+                    return $this->redirect(['admin/show', 'table'=>$model->tableName()]);
+                }
+            }
+            return $this->render('create', ['model'=>$model]);
+        }else{
+            \Yii::$app->response->setStatusCode(404);
+        }
+    }
+
+    public function actionDelete($table, $key)
+    {
+        if($this->getModelByName($table)){
+            $model = $this->getModelByName($table)::find()->where(['unique_key'=>$key])->one();
+            if($model){
+                $model->delete();
+                $this->redirect(['admin/show', 'table'=>$table]);
+            }
+        }else{
+            \Yii::$app->response->setStatusCode(404);
+        }
     }
 
 }

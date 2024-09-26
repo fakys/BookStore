@@ -40,6 +40,7 @@ class ConditionBook extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            ['name', 'required'],
             [['description'], 'string'],
             [['returnable'], 'boolean'],
             [['created_at', 'updated_at'], 'safe'],
@@ -58,14 +59,14 @@ class ConditionBook extends \yii\db\ActiveRecord
         ];
     }
 
-    public function getSearchFields()
-    {
-        return [
-            'name',
-            'description',
-            'unique_key'
-        ];
-    }
+   public function beforeSave($insert)
+   {
+       if(!$this->returnable){
+           $this->returnable = 0;
+       }
+       $this->create_unique_key();
+       return parent::beforeSave($insert);
+   }
 
     /**
      * {@inheritdoc}

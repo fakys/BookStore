@@ -25,15 +25,15 @@
                     </tr>
                     </thead>
                     <tbody class="mini-table-body">
-                    <tr>
-                        <?php foreach ($model::find()->asArray()->all() as $data):?>
+                    <?php foreach ($model::find()->asArray()->all() as $data):?>
+                        <tr>
                             <?php foreach ($data as $key=>$val):?>
                                 <?php if(in_array($key, $model::getMainFields())):?>
                                     <td><?=\backend\helpers\Str::limit($val, 10)?></td>
                                 <?php endif;?>
                             <?php endforeach;?>
-                        <?php endforeach;?>
-                    </tr>
+                        </tr>
+                    <?php endforeach;?>
                     </tbody>
                 </table>
             </div>

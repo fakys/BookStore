@@ -27,3 +27,70 @@
 .card-body{
     overflow: auto;
 }
+
+.photo-input{
+    display: none;
+}
+.admin-drop-zone{
+    border: 1px solid #ced4da;
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    cursor: pointer;
+    width: 380px;
+    height: 280px;
+    transition-duration: 0.3s;
+}
+.admin-drop-zone i{
+    font-size: 150px;
+    margin: 10px;
+}
+.name-image-drop-zone{
+    text-align: center;
+    font-size: 18px;
+}
+.admin-drop-zone:hover{
+    border: 1px solid var(--primary);
+}
+.admin-drop-zone-image{
+    position: absolute;
+    border-radius: 5px;
+    height: auto;
+    min-width: 100px;
+    min-height: 70px;
+    max-width: 350px;
+    max-height: 250px;
+}
+.admin-drop-zone-content{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+.admin-close-drop-zone{
+    padding: 5px 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none;
+}
+.admin-close-drop-zone{
+    background: var(--danger);
+    padding: 5px;
+    cursor: pointer;
+    color: white;
+    border-radius: 5px;
+}
+.dragover{
+    border: 1px dashed var(--primary);
+}
+.invalid-drop-zone{
+    border: 1px solid var(--danger);
+}
+.help-block{
+    color: var(--danger);
+    font-size: 12px;
+}

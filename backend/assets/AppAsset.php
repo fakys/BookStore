@@ -19,10 +19,11 @@ class AppAsset extends AssetBundle
     public $js = [
         'js/adminlte.js',
         'js/jq_main.js',
-        'js/paginate.js'
+        'js/paginate.js',
+        'js/drop_zone.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',
-        'yii\bootstrap5\BootstrapAsset',
+        'yii\bootstrap5\BootstrapPluginAsset',
     ];
 }

@@ -77,14 +77,11 @@ class Author extends \yii\db\ActiveRecord
         ];
     }
 
-    public function getSearchFields()
+    public function beforeSave($insert)
     {
-        return [
-            'name',
-            'surname',
-            'email',
-            'unique_key',
-        ];
+        $this->upload_image('avatar', 'authors_image');
+        $this->create_unique_key();
+        return parent::beforeSave($insert);
     }
 
     /**

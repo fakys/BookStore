@@ -25,6 +25,8 @@ use Yii;
 class Client extends \yii\db\ActiveRecord
 {
     use ModelsTrait;
+
+    public $password_confirm;
     /**
      * {@inheritdoc}
      */
@@ -38,15 +40,12 @@ class Client extends \yii\db\ActiveRecord
         return 'Клиенты';
     }
 
-    public function getSearchFields()
+    public function beforeSave($insert)
     {
-        return [
-            'name',
-            'surname',
-            'passport_series',
-            'passport_number',
-            'email',
-        ];
+        $this->upload_image('avatar', 'clients_image');
+        $this->create_unique_key();
+        $this->hashPassword();
+        return parent::beforeSave($insert);
     }
 
     /**
@@ -55,11 +54,13 @@ class Client extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['name', 'surname', 'password_confirm', 'password', 'patronymic', 'passport_series', 'passport_number', 'email'], 'required'],
             [['created_at', 'updated_at'], 'safe'],
             [['name'], 'string', 'max' => 30],
             [['surname', 'patronymic', 'passport_series', 'passport_number', 'email', 'avatar', 'unique_key'], 'string', 'max' => 255],
             [['email'], 'unique'],
             [['unique_key'], 'unique'],
+            ['password_confirm', 'compare', 'compareAttribute' => 'password'],
         ];
     }
 
@@ -87,6 +88,8 @@ class Client extends \yii\db\ActiveRecord
             'email' => 'Email',
             'avatar' => 'Фотография',
             'unique_key' => 'Уникальный ключ',
+            'password'=>'Пароль',
+            'password_confirm'=>'Повторите пароль',
             'created_at' => 'Время создания',
             'updated_at' => 'Время обновления',
         ];

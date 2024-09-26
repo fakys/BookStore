@@ -39,12 +39,11 @@ class IssuedOrder extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['order_id', 'date_issue'], 'required'],
             [['order_id'], 'default', 'value' => null],
-            [['order_id'], 'integer'],
             [['date_issue', 'created_at', 'updated_at'], 'safe'],
             [['unique_key'], 'string', 'max' => 255],
             [['unique_key'], 'unique'],
-            [['order_id'], 'exist', 'skipOnError' => true, 'targetClass' => Order::class, 'targetAttribute' => ['order_id' => 'id']],
         ];
     }
 
@@ -58,13 +57,11 @@ class IssuedOrder extends \yii\db\ActiveRecord
     }
 
 
-    public function getSearchFields()
+    public function beforeSave($insert)
     {
-        return [
-            'unique_key',
-            'created_at',
-            'date_issue'
-        ];
+        $this->create_fk(Order::class, 'order_id');
+        $this->create_unique_key();
+        return parent::beforeSave($insert);
     }
     /**
      * {@inheritdoc}
