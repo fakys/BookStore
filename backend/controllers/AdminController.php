@@ -26,12 +26,13 @@ class AdminController extends Controller
         if($this->getModelByName($table)){
             $model = new($this->getModelByName($table))();
             $search = \Yii::$app->request->get('search');
+            $field = \Yii::$app->request->get('field');
             if($search){
-                $data = $model->Search($search);
+                $data = $model->Search($search, $field);
             }else{
                 $data = $model->find()->asArray()->all();
             }
-            return $this->render('show', ['model'=>$model, 'data'=>$data, 'search'=>$search]);
+            return $this->render('show', ['model'=>$model, 'data'=>$data, 'search'=>$search, 'field'=>$field]);
         }else{
             $this->response->setStatusCode(404);
         }

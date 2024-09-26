@@ -66,15 +66,6 @@ class Book extends \yii\db\ActiveRecord
             'description',
         ];
     }
-
-    public function getSearchFields()
-    {
-        return [
-            'name',
-            'description',
-            'unique_key'
-        ];
-    }
     public function attributeLabels()
     {
         return [

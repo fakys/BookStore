@@ -17,13 +17,29 @@
                                 <a href="<?=\yii\helpers\Url::to(['admin/show', 'table'=>$model::tableName()])?>" class="btn btn-danger p-0 pl-2 pr-2">Отмена</a>
                             </div>
                         <?php endif;?>
-                        <div class="input-group input-group-sm" style="width: 150px;">
-                            <input type="text" name="search" class="form-control float-right" placeholder="Поиск" value="<?=$search?>">
-                            <div class="input-group-append">
-                                <button type="submit" class="btn btn-default">
-                                    <i class="fas fa-search"></i>
-                                </button>
+                        <div class="d-flex flex-column gap-1">
+                            <div class="input-group input-group-sm" style="width: 150px;">
+                                <input type="text" name="search" class="form-control float-right" placeholder="Поиск" value="<?=$search?>">
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-default">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
                             </div>
+                            <select class="form-control-sm" name="field">
+                                <?php if($field):?>
+                                    <option value="" selected>Не выбранно</option>
+                                <?php else:?>
+                                    <option class="" value="">Не выбранно</option>
+                                <?php endif;?>
+                                <?php foreach ($model->attributeLabels() as $key=>$val):?>
+                                    <?php if($field == $key):?>
+                                        <option value="<?=$key?>" selected><?=\backend\helpers\Str::limit($val, 10)?></option>
+                                    <?php else:?>
+                                        <option value="<?=$key?>"><?=\backend\helpers\Str::limit($val, 10)?></option>
+                                    <?php endif;?>
+                                <?php endforeach;?>
+                            </select>
                         </div>
                     </div>
                 </form>

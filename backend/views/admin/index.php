@@ -10,7 +10,7 @@
     <?php foreach ($models as $model):?>
         <div class="card index-table">
             <div class="card-header">
-                <h3 class="card-title"><?=$model::ruTableName()?></h3>
+                <h3 class="card-title"><a href="<?=\yii\helpers\Url::to(['admin/show', 'table'=>$model::tableName()])?>"><?=$model::ruTableName()?></a> </h3>
             </div>
             <!-- /.card-header -->
             <div class="card-body index-table-body" >
