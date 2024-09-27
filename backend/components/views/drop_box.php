@@ -13,7 +13,11 @@ $class_name = explode('\\', get_class($model))[count(explode('\\', get_class($mo
             <label><?=$model->attributeLabels()[$name]?></label>
             <label for="admin-photo-input" class="admin-drop-zone">
                 <div class="d-flex justify-content-center align-items-center">
-                    <img src="" class="admin-drop-zone-image">
+                    <?php if($model->$name):?>
+                        <img src="<?=Yii::getAlias('@FrontendWeb')."/".$model->$name?>" class="admin-drop-zone-image">
+                    <?php else:?>
+                        <img src="" class="admin-drop-zone-image">
+                    <?php endif;?>
                 </div>
                 <div class="admin-drop-zone-content">
                     <i class="fa fa-download" aria-hidden="true"></i>

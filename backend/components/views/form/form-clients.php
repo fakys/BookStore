@@ -16,5 +16,5 @@
 
 <?=\backend\components\DropBoxComponent::widget(['model'=>$model, 'name'=>'avatar'])?>
 
-<input type="submit" class="btn btn-success" value="Создать">
+<input type="submit" class="btn btn-success" value="Сохронить">
 <?php \yii\widgets\ActiveForm::end()?>

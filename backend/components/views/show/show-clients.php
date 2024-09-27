@@ -128,7 +128,7 @@ $order = $model->getOrders()->all();
                     <?php if($order):?>
                         <?php foreach ($order as $val):?>
                             <?php $by_book = $val->getIssuedOrders()->one(); if($by_book):?>
-                                <div><a href="<?=\yii\helpers\Url::to(['admin/show-table', 'table'=>$by_book->tableName(), 'key'=>$by_book->unique_key])?>"><?=$by_book->number?></a></div>
+                                <div><a href="<?=\yii\helpers\Url::to(['admin/show-table', 'table'=>$by_book->tableName(), 'key'=>$by_book->unique_key])?>"><?=$by_book->unique_key?></a></div>
                             <?php endif;?>
                         <?php endforeach;?>
                     <?php endif;?>

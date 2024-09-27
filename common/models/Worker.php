@@ -26,6 +26,8 @@ class Worker extends \yii\db\ActiveRecord
 {
     use ModelsTrait;
 
+    const CREATE = 'create';
+
     public $password_confirm;
     /**
      * {@inheritdoc}
@@ -39,7 +41,6 @@ class Worker extends \yii\db\ActiveRecord
     {
         return 'Работники';
     }
-
     /**
      * {@inheritdoc}
      */

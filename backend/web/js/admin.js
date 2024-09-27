@@ -12,9 +12,6 @@ $(document).ready(function (){
             },
             success:function (suc){
                 $('.sent-tr-'+key).remove()
-                if($('.sent-tr').length === 0){
-                    $('.sent_orders').addClass('d-none')
-                }
             },
             error:function (err){
                 console.log(err)
@@ -35,9 +32,25 @@ $(document).ready(function (){
             },
             success:function (suc){
                 $('.came-tr-'+key).remove()
-                if($('.came-tr').length === 0){
-                    $('.came_orders').addClass('d-none')
-                }
+            },
+            error:function (err){
+                console.log(err)
+            }
+        })
+    })
+    $('.return-order').on('click', function (){
+        let parent = $(this).parent()
+        let url = parent.data('url')
+        let key = parent.data('key')
+        $.ajax({
+            url:url,
+            method:'POST',
+            data:{
+                design:true,
+                key:key
+            },
+            success:function (suc){
+                $('.return-tr-'+key).remove()
             },
             error:function (err){
                 console.log(err)

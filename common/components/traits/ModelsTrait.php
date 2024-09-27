@@ -9,7 +9,8 @@ use yii\web\UploadedFile;
 
 trait ModelsTrait
 {
-
+    public const UPDATE = 'update';
+    public const CREATE = 'create';
     public function behaviors()
     {
         return [
@@ -44,7 +45,8 @@ trait ModelsTrait
 
     public function upload_image($name, $dir)
     {
-        $file = UploadedFile::getInstance($this, 'avatar');
+        $file = UploadedFile::getInstance($this, $name);
+
         if($file){
             $file_name = \Yii::$app->security->generateRandomString(20);
             $file_path = "storage/$dir/{$file_name}.{$file->getExtension()}";
@@ -73,7 +75,9 @@ trait ModelsTrait
 
     public function hashPassword()
     {
-        $this->password = \Yii::$app->security->generatePasswordHash($this->password);
+        if($this->password){
+            $this->password = \Yii::$app->security->generatePasswordHash($this->password);
+        }
     }
 
     public function create_fk($model, $name)

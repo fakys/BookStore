@@ -12,5 +12,5 @@
     <?=$form->field($model, 'sent')->checkbox()?>
     <?=$form->field($model, 'dispatch_date')->input('date')?>
     <?=$form->field($model, 'arrival_date')->input('date')?>
-<input type="submit" class="btn btn-success" value="Создать">
+<input type="submit" class="btn btn-success" value="Сохронить">
 <?php \yii\widgets\ActiveForm::end()?>

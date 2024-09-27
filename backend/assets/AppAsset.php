@@ -21,7 +21,8 @@ class AppAsset extends AssetBundle
         'js/admin.js',
         'js/jq_main.js',
         'js/paginate.js',
-        'js/drop_zone.js'
+        'js/drop_zone.js',
+        'js/jq.knob.min.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

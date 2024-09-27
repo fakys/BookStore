@@ -35,13 +35,13 @@ class Author extends \yii\db\ActiveRecord
     {
         return 'Авторы';
     }
-
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
+            [['name', 'surname', 'email'], 'required'],
             [['created_at', 'updated_at'], 'safe'],
             [['name'], 'string', 'max' => 30],
             [['surname', 'patronymic', 'email', 'avatar', 'unique_key'], 'string', 'max' => 255],
@@ -79,8 +79,10 @@ class Author extends \yii\db\ActiveRecord
 
     public function beforeSave($insert)
     {
+        if($insert){
+            $this->create_unique_key();
+        }
         $this->upload_image('avatar', 'authors_image');
-        $this->create_unique_key();
         return parent::beforeSave($insert);
     }
 

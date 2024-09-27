@@ -14,5 +14,5 @@
 <?=$form->field($model, 'author_id')->dropDownList(\yii\helpers\ArrayHelper::map(\common\models\Author::find()->asArray()->all(), 'unique_key', 'surname'))?>
 <?=$form->field($model, 'photos[]')->fileInput(['class'=>'form-control', 'multiple'=>true])?>
 
-<input type="submit" class="btn btn-success" value="Создать">
+<input type="submit" class="btn btn-success" value="Сохронить">
 <?php \yii\widgets\ActiveForm::end()?>

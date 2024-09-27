@@ -104,4 +104,13 @@ class Client extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Order::class, ['client_id' => 'id']);
     }
+
+    public function getIssuedOrder()
+    {
+        $issued = $this->getOrders()->one();
+        if($issued){
+            return $issued->getIssuedOrders();
+        }
+        return [];
+    }
 }

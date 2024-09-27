@@ -99,3 +99,7 @@
     max-height: 250px;
     border-radius: 15px;
 }
+.card-static{
+    max-height: 250px;
+    overflow: auto;
+}
