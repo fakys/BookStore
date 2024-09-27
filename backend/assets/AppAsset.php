@@ -18,6 +18,7 @@ class AppAsset extends AssetBundle
     ];
     public $js = [
         'js/adminlte.js',
+        'js/admin.js',
         'js/jq_main.js',
         'js/paginate.js',
         'js/drop_zone.js'

@@ -65,11 +65,14 @@ class Order extends \yii\db\ActiveRecord
 
     public function beforeSave($insert)
     {
-        $this->create_unique_key();
-        $this->create_fk(Client::class, 'client_id');
-        $this->create_fk(Worker::class, 'worker_id');
-        $this->create_fk(Book::class, 'book_id');
-        $this->number = uniqid();
+        if($insert){
+            $this->create_unique_key();
+            $this->create_fk(Client::class, 'client_id');
+            $this->create_fk(Worker::class, 'worker_id');
+            $this->create_fk(Book::class, 'book_id');
+            $this->number = uniqid();
+        }
+
         return parent::beforeSave($insert);
 
     }

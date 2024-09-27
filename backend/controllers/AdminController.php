@@ -1,6 +1,7 @@
 <?php
 namespace backend\controllers;
 use backend\components\behaviors\DataModelBehavior;
+use common\models\Order;
 use common\models\Position;
 use yii\web\Controller;
 
@@ -16,6 +17,12 @@ class AdminController extends Controller
             ]
         ];
     }
+    public function beforeAction($action)
+    {
+        $this->enableCsrfValidation = false;
+        return parent::beforeAction($action);
+    }
+
     public function actionIndex()
     {
         return $this->render('index', ['models' => $this->getAllModel()]);
@@ -78,4 +85,31 @@ class AdminController extends Controller
         \Yii::$app->response->setStatusCode(404);
     }
 
+    public function actionNotification()
+    {
+        $sent_orders = Order::find()->andWhere(['sent'=>false])->all();
+        $came_orders = Order::find()->andWhere(['came'=>false])->all();
+        return $this->render('notification', ['sent_orders'=>$sent_orders, 'came_orders'=>$came_orders]);
+    }
+
+    public function actionSendOrders($table)
+    {
+        if($this->getModelByName($table) && \Yii::$app->request->isAjax){
+            $model = $this->getModelByName($table)::find()->where(['unique_key'=>\Yii::$app->request->post('key')])->one();
+            $model->sent = true;
+            $model->save();
+            return true;
+        }
+        \Yii::$app->response->setStatusCode(404);
+    }
+    public function actionCameOrders($table)
+    {
+        if($this->getModelByName($table) && \Yii::$app->request->isAjax){
+            $model = $this->getModelByName($table)::find()->where(['unique_key'=>\Yii::$app->request->post('key')])->one();
+            $model->came = true;
+            $model->save();
+            return true;
+        }
+        \Yii::$app->response->setStatusCode(404);
+    }
 }
