@@ -1,52 +1,42 @@
 <?php
-
-/** @var yii\web\View $this */
-
-$this->title = 'My Yii Application';
+/**
+ * @var array $books
+ * @var \common\models\Book $var
+ */
 ?>
-<div class="site-index">
-    <div class="p-5 mb-4 bg-transparent rounded-3">
-        <div class="container-fluid py-5 text-center">
-            <h1 class="display-4">Congratulations!</h1>
-            <p class="fs-5 fw-light">You have successfully created your Yii-powered application.</p>
-            <p><a class="btn btn-lg btn-success" href="https://www.yiiframework.com">Get started with Yii</a></p>
-        </div>
-    </div>
 
-    <div class="body-content">
+<div class="container">
+    <div class="index-page">
+        <div class="main-content-index-page">
+            <h3 class="title">Товары</h3>
+            <div class="main-content-block">
+                <?php foreach ($books as $val):?>
+                <div class="product-block">
+                    <a href="<?=\yii\helpers\Url::to(['product/show/', 'id'=>$val['id']])?>" class="product-image-block">
+                        <?php $photos= $val->getBooksPhotos()->asArray()->all(); if($photos):?>
+                            <img src="<?=Yii::getAlias('@web').$photos[0]['photo']?>">
+                        <?php else:?>
+                            <img src="<?=Yii::getAlias('@web').'/image/user/default_user_ava.png'?>">
+                        <?php endif;?>
+                    </a>
+                    <div class="text-center">
+                        <div class="link-product">
+                            <?=$val['name']?>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="price-block-main-content">
+                            <?=$val['price']?> ₽
+                        </div>
+                        <div class="d-flex gap-2">
+                            <a href="<?=\yii\helpers\Url::to(['user/design-order', 'key'=>$val['unique_key']])?>" class="btn-main">Заказать</a>
+                        </div>
+                    </div>
+                </div>
+                <?php endforeach;?>
 
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-outline-secondary" href="https://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-outline-secondary" href="https://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-outline-secondary" href="https://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
             </div>
         </div>
-
     </div>
 </div>

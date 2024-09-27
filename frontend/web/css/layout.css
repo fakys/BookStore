@@ -1,0 +1,202 @@
+:root{
+    --main-collor:#fc8507;
+    --main-collor-white: #f58c39;
+    --main-c-gray: #333;
+}
+a{
+    text-decoration: none;
+}
+.main-logo-header{
+    font-size: 30px;
+    color: black;
+    text-decoration: none;
+}
+.btn-catalog-header{
+    background: var(--main-collor);
+    display: flex;
+    color: white;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    gap: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition-duration: 0.5s;
+    border-radius: 7px;
+}
+.btn-catalog-header:hover{
+    background: var(--main-collor-white);
+}
+.btn-catalog-header i{
+    font-size: 18px;
+}
+.search-input-header:focus{
+    border-color: var(--main-collor-white);
+    box-shadow: 0 0 0 0.2rem rgba(252, 133, 7, 0.55);
+}
+.btn-search-header{
+    background: var(--main-collor);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    padding: 3px 10px;
+}
+.btn-search-header:hover{
+    background: var(--main-collor-white);
+    color: white;
+}
+.btn-search-header:active{
+    border-color: var(--main-collor-white);
+    box-shadow: 0 0 0 0.2rem rgba(252, 133, 7, 0.55);
+}
+.link-header{
+    color: gray;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    transition-duration: 0.2s;
+}
+.link-header:hover{
+    color: var(--main-collor);
+}
+.main-footer{
+    padding: 10px;
+    color: white;
+    background: var(--main-c-gray);
+}
+.footer-main-footer{
+    text-align: center;
+    color: #d5d5d5;
+    font-size: 12px;
+    border-top: 1px solid #d5d5d5;
+    margin: 0px 10%;
+}
+.title-footer{
+    text-align: center;
+    font-size: 25px;
+    margin-bottom: 10px;
+}
+.main-content{
+    min-height: 100vh;
+    padding-top: 100px;
+}
+.main-navbar-container{
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    transition-duration: 0.3s;
+    height: 100%;
+    transform: translate(-15000px, 0px);
+    z-index: 100;
+}
+.main-navbar-background{
+    background: rgba(124, 124, 124, 0.5);
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 99;
+    display: none;
+}
+.fixed-top{
+    z-index: 50;
+}
+.main-navbar{
+    width: 80%;
+    background: white;
+    border-radius: 20px;
+    min-width: 300px;
+    overflow: auto;
+    height: 80%;
+    padding: 10px;
+}
+.navbar-title{
+    font-size: 25px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.navbar-catalog{
+    color: black;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    transition-duration: 0.3s;
+    align-items: center;
+}
+.navbar-catalog:hover{
+    color: var(--main-collor);
+}
+.navbar-catalog-container{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+.navbar-catalog-icon{
+    width: 160px;
+    height: 160px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.navbar-catalog-icon img{
+    max-width: 150px;
+    max-height: 150px;
+}
+.close-btn-navbar{
+    display: flex;
+}
+.close-btn-navbar i{
+    margin-left: auto;
+    transition-duration: 0.3s;
+    cursor: pointer;
+}
+.close-btn-navbar i:hover{
+    color: var(--main-collor);
+}
+.open-navbar{
+    transform: translate(0px, 0px);
+}
+.header-user-avatar{
+    width: 17px;
+    height: 17px;
+    border-radius: 10px;
+}
+.logout-menu-container{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(124, 124, 124, 0.5);
+    z-index: 101;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none;
+}
+.logout-menu{
+    background: white;
+    border-radius: 10px;
+}
+.title-logout-menu{
+    background: var(--main-collor);
+    color: white;
+    font-size: 20px;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    padding:10px;
+    padding-bottom: 0px;
+}
+.body-logout-menu{
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+}

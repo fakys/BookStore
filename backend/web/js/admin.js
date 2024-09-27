@@ -12,6 +12,7 @@ $(document).ready(function (){
             },
             success:function (suc){
                 $('.sent-tr-'+key).remove()
+                console.log(suc)
             },
             error:function (err){
                 console.log(err)

@@ -55,12 +55,19 @@ class Order extends \yii\db\ActiveRecord
             [['count'], 'integer'],
             [['sent', 'came'], 'boolean'],
             [['dispatch_date', 'arrival_date', 'created_at', 'updated_at'], 'safe'],
-            ['dispatch_date',  'compare', 'compareAttribute' => 'arrival_date',  'operator' => '<='],
-            ['arrival_date',  'compare', 'compareAttribute' => 'dispatch_date',  'operator' => '>='],
             [['number', 'unique_key'], 'string', 'max' => 255],
             [['number'], 'unique'],
             [['unique_key'], 'unique'],
         ];
+    }
+    public function get_arrival_date()
+    {
+        $date = new \DateTime($this->dispatch_date);
+        $days = $this->getBook()->one()->delivery_time_days;
+        if($days){
+            $date->modify("+$days day");
+        }
+        $this->arrival_date = $date->format('Y-m-d H:i');
     }
 
     public function beforeSave($insert)
@@ -71,8 +78,12 @@ class Order extends \yii\db\ActiveRecord
             $this->create_fk(Worker::class, 'worker_id');
             $this->create_fk(Book::class, 'book_id');
             $this->number = uniqid();
+            $this->get_arrival_date();
         }
-
+        if($this->sent){
+            $this->get_date('dispatch_date');
+            $this->get_arrival_date();
+        }
         return parent::beforeSave($insert);
 
     }

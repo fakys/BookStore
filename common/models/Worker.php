@@ -114,6 +114,7 @@ class Worker extends \yii\db\ActiveRecord implements IdentityInterface
                 return true;
             }
         }
+        $this->addError('email', 'Не верный логин или пароль');
         return false;
     }
 

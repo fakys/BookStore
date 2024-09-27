@@ -47,7 +47,7 @@ class Book extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'price'], 'required'],
+            [['name', 'price', 'delivery_time_days'], 'required'],
             [['description'], 'string'],
             [['price'], 'number'],
             [['remainder', 'delivery_time_days', 'category_id', 'author_id'], 'default', 'value' => null],
@@ -91,7 +91,7 @@ class Book extends \yii\db\ActiveRecord
             'description' => 'Описание',
             'price' => 'Цена',
             'remainder' => 'Остаток',
-            'delivery_time_days' => 'Примерное время доставки',
+            'delivery_time_days' => 'Время доставки в днях',
             'article' => 'Артикул',
             'category_id' => 'Категория',
             'author_id' => 'Автор',

@@ -1,103 +1,249 @@
-main > .container, main > .container-fluid
-{
-    padding: 70px 15px 20px;
+:root{
+    --c-white-gray: #757575;
+}
+.title-block-index-page{
+    color: var(--c-white-gray);
+    text-decoration: none;
+    transition-duration: 0.3s;
+}
+.title-block-index-page:hover{
+    color: var(--main-collor);
+}
+.content-block-image img{
+    max-width: 150px;
+    max-height: 150px;
+}
+.content-block-content{
+    text-align: center;
+    font-size: 20px;
+    color: var(--c-white-gray);
+    transition-duration: 0.3s;
+}
+.content-block-content:hover{
+    color: var(--main-collor);
+}
+.content-block-index-page{
+    display: flex;
+    gap: 50px;
+    justify-content: space-around;
+    padding: 0px 30px;
+    overflow: auto;
+}
+.content-block-content{
+    text-decoration: none;
+    width: 200px;
+    height: 230px;
+}
+.main-content-index-page{
+    padding-top: 20px;
+}
+.title{
+    color: var(--c-white-gray);
+}
+.product-image-block img{
+    max-width: 200px;
+    max-height: 200px;
+}
+.price-block-main-content{
+    color: var(--main-collor);
+    font-size: 20px;
+}
+.product-block{
+    width: 200px;
+}
+.btn-buy, .btn-fav{
+    cursor: pointer;
+    font-size: 18px;
+    color: var(--c-white-gray);
+}
+.btn-buy_active{
+    cursor: pointer;
+    font-size: 18px;
+    color: var(--main-collor);
+}
+.btn-buy:hover{
+    color: var(--main-collor);
+}
+.btn-fav:hover{
+    color: #DC3545FF;
 }
 
-.footer {
-    background-color: #f5f5f5;
-    font-size: .9em;
-    height: 60px;
+.main-content-block, .show_category_page{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 30px;
 }
-
-.footer > .container, .footer > .container-fluid {
-    padding-right: 15px;
-    padding-left: 15px;
+.product-image-block{
+    display: flex;
+    justify-content: center;
 }
-
-.not-set {
-    color: #c55;
-    font-style: italic;
+.cat-page{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 50px;
 }
-
-/* add sorting icons to gridview sort links */
-a.asc:after, a.desc:after {
-    content: '';
-    left: 3px;
-    display: inline-block;
-    width: 0;
-    height: 0;
-    border: solid 5px transparent;
-    margin: 4px 4px 2px 4px;
-    background: transparent;
+.h1{
+    color: #464646;
+    margin-bottom: 10px;
 }
-
-a.asc:after {
-    border-bottom: solid 7px #212529;
-    border-top-width: 0;
-}
-
-a.desc:after {
-    border-top: solid 7px #212529;
-    border-bottom-width: 0;
-}
-
-.grid-view th,
-.grid-view td:last-child {
+.btn-main{
+    background: var(--main-collor);
+    color: white;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    border-radius: 5px;
     white-space: nowrap;
+    padding: 3px 10px;
+}
+.font-size-20{
+    font-size: 20px;
+}
+.btn-main:hover{
+    background: var(--main-collor-white);
+    color: white;
+}
+.btn-main:active{
+    border-color: var(--main-collor-white);
+    box-shadow: 0 0 0 0.2rem rgba(252, 133, 7, 0.55);
 }
 
-.grid-view .filters input,
-.grid-view .filters select {
-    min-width: 50px;
+/*slider!!!!!!!!!!!*/
+.slide img{
+    max-height: 300px;
+    max-width: 300px;
+    border-radius: 10px;
 }
-
-.hint-block {
-    display: block;
-    margin-top: 5px;
-    color: #999;
+.slide{
+    width: 310px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    display: none;
 }
-
-.error-summary {
-    color: #a94442;
-    background: #fdf7f7;
-    border-left: 3px solid #eed3d7;
-    padding: 10px 20px;
-    margin: 0 0 15px 0;
+.active-slide{
+    display: flex;
 }
+.scip-btn{
+    display: flex;
+    justify-items: center;
+    align-items: center;
 
-/* align the logout "link" (button in form) of the navbar */
-.navbar form > button.logout {
-    padding-top: 7px;
-    color: rgba(255, 255, 255, 0.5);
 }
-
-@media(max-width:767px) {
-    .navbar form > button.logout {
-        display:block;
-        text-align: left;
-        width: 100%;
-        padding: 10px 0;
-    }
+.scip-btn div{
+    cursor: pointer;
+    font-size: 20px;
+    background: rgb(26, 26, 26, 40%);
+    border-radius: 10px;
+    color: white;
+    transition-duration: 0.5s;
 }
+.slider-pre{
+    padding: 5px 15px 5px 5px;
+}
+.slider-nex{
+    padding: 5px 5px 5px 15px;
+}
+.scip-btn div:hover{
+    background: rgb(26, 26, 26, 50%);
+}
+.mini-slide img{
+    max-height: 80px;
+    max-width: 80px;
+    border-radius: 5px;
+}
+.mini-slide{
+    cursor: pointer;
+    transition-duration: 0.2s;
+    padding: 0px 7px;
+}
+.mini-slide:hover{
+    border-radius: 10px;
+    transform: scale(1.1);
+}
+.mini-slide-container{
+    display: flex;
+    margin-top: 20px;
+    align-items: center;
+    max-width: 410px;
+    overflow-x: auto;
+    padding: 10px;
+}
+.start-slider{
+    display: flex;
+}
+.start-slider-container{
+    max-width: 400px;
+}
+.slider-container{
+    height: 300px;
+    display: flex;
+    align-items: center;
+}
+.product-page-panel{
+    box-shadow: -1px 1px 5px 5px rgba(112,112,112,0.28);
+    padding: 10px;
+    gap: 20px;
+    display: flex;
+    border-radius: 30px;
+}
+.description-product{
+    box-shadow: -1px 1px 5px 1px rgba(112,112,112,0.28);
+    padding: 5px;
+    height: 200px;
+    border-radius: 10px;
+    overflow: auto;
+}
+.data-product-panel{
+    width: 100%;
+}
+.title-product-block{
+    font-size: 25px;
+    margin-bottom: 10px;
+}
+.font-size-18{
+    font-size: 18px;
+}
+.buy-block{
+    display: flex;
+    margin-top: 20px;
+}
+.buy-block-container{
 
-.navbar form > button.logout:focus,
-.navbar form > button.logout:hover {
+    width: 300px;
+    display: flex;
+    gap: 10px;
+}
+.price-product{
+    font-size: 25px;
+}
+.fav-btn-product:hover{
+    color: var(--main-collor);
+}
+.buy-btn-product{
+    cursor: pointer;
+    font-size: 20px;
+    background: var(--main-collor);
+    padding: 0px 10px;
+    color: white;
+    border-radius: 10px;
+}
+.link-product{
+    color: var(--c-white-gray);
     text-decoration: none;
-    color: rgba(255, 255, 255, 0.75);
+    transition-duration: 0.3s;
 }
 
-.navbar form > button.logout:focus {
-    outline: none;
+.link-product:hover{
+    color: var(--main-collor);
 }
-
-/* style breadcrumb widget as in previous bootstrap versions */
-.breadcrumb {
-    background-color: var(--bs-gray-200);
-    border-radius: .25rem;
-    padding: .75rem 1rem;
-}
-
-.breadcrumb-item > a
-{
-    text-decoration: none;
+.product-fav-show{
+    box-shadow: -1px 1px 5px 1px rgba(112,112,112,0.28);
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 10px;
+    padding: 5px;
 }

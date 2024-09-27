@@ -4,6 +4,7 @@ namespace common\models;
 
 use common\components\traits\ModelsTrait;
 use Yii;
+use yii\web\IdentityInterface;
 
 /**
  * This is the model class for table "clients".
@@ -22,11 +23,13 @@ use Yii;
  *
  * @property Order[] $orders
  */
-class Client extends \yii\db\ActiveRecord
+class Client extends \yii\db\ActiveRecord implements IdentityInterface
 {
     use ModelsTrait;
 
     public $password_confirm;
+    public $authKey;
+    public $rememberMe;
     /**
      * {@inheritdoc}
      */
@@ -112,5 +115,43 @@ class Client extends \yii\db\ActiveRecord
             return $issued->getIssuedOrders();
         }
         return [];
+    }
+
+    public function login()
+    {
+        $user = self::find()->where(['email'=>$this->email])->one();
+        if(Yii::$app->security->validatePassword($this->password, $user->password)){
+            if(Yii::$app->user->login($user, $this->rememberMe)){
+                return true;
+            }
+        }
+        $this->addError('email', 'Не верный логин или пароль');
+        return false;
+    }
+
+
+    public static function findIdentity($id)
+    {
+        return static::findOne($id);
+    }
+
+    public static function findIdentityByAccessToken($token, $type = null)
+    {
+        return static::findOne(['unique_key' => $token]);
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function getAuthKey()
+    {
+        return $this->authKey;
+    }
+
+    public function validateAuthKey($authKey)
+    {
+        return $this->authKey === $authKey;
     }
 }

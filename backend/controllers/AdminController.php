@@ -93,7 +93,7 @@ class AdminController extends Controller
     public function actionNotification()
     {
         $sent_orders = Order::find()->andWhere(['sent'=>false])->all();
-        $came_orders = Order::find()->andWhere(['came'=>false])->all();
+        $came_orders = Order::find()->andWhere(['and', ['sent'=>true], ['came'=>false]])->all();
         $return = BookReturn::find()->andWhere(['will_return'=>false])->all();
 
 
@@ -105,6 +105,7 @@ class AdminController extends Controller
         if($this->getModelByName($table) && \Yii::$app->request->isAjax){
             $model = $this->getModelByName($table)::find()->where(['unique_key'=>\Yii::$app->request->post('key')])->one();
             $model->sent = true;
+
             $model->save();
             return true;
         }
@@ -117,6 +118,7 @@ class AdminController extends Controller
             $model = $this->getModelByName($table)::find()->where(['unique_key'=>\Yii::$app->request->post('key')])->one();
             $model->will_return = true;
             $model->save();
+
             return true;
         }
         \Yii::$app->response->setStatusCode(404);
