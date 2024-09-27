@@ -49,9 +49,15 @@ $this->beginPage();
                 </form>
             </div>
             <div class="col-lg-3 d-flex justify-content-center gap-3">
+                <?php if(Yii::$app->user->isGuest):?>
                 <a href="<?=Url::to(['user/login'])?>" class="link-header">
                     Войти
                 </a>
+                <?php else:?>
+                    <a href="<?=Url::to(['user/profile'])?>" class="link-header">
+                        Профиль
+                    </a>
+                <?php endif;?>
             </div>
         </div>
     </div>

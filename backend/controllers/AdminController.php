@@ -24,7 +24,6 @@ class AdminController extends Controller
     {
         if(\Yii::$app->user->isGuest)
             return  $this->redirect(['site/login']);
-        $this->enableCsrfValidation = false;
         return parent::beforeAction($action);
     }
 
@@ -95,43 +94,9 @@ class AdminController extends Controller
         $sent_orders = Order::find()->andWhere(['sent'=>false])->all();
         $came_orders = Order::find()->andWhere(['and', ['sent'=>true], ['came'=>false]])->all();
         $return = BookReturn::find()->andWhere(['will_return'=>false])->all();
+        $issued_order = \common\models\Order::find()->andWhere(['and', ['sent'=>true], ['came'=>true]])->all();
 
-
-        return $this->render('notification', ['sent_orders'=>$sent_orders, 'came_orders'=>$came_orders, 'return'=>$return]);
-    }
-
-    public function actionSendOrders($table)
-    {
-        if($this->getModelByName($table) && \Yii::$app->request->isAjax){
-            $model = $this->getModelByName($table)::find()->where(['unique_key'=>\Yii::$app->request->post('key')])->one();
-            $model->sent = true;
-
-            $model->save();
-            return true;
-        }
-        \Yii::$app->response->setStatusCode(404);
-    }
-
-    public function actionReturnOrders($table)
-    {
-        if($this->getModelByName($table) && \Yii::$app->request->isAjax){
-            $model = $this->getModelByName($table)::find()->where(['unique_key'=>\Yii::$app->request->post('key')])->one();
-            $model->will_return = true;
-            $model->save();
-
-            return true;
-        }
-        \Yii::$app->response->setStatusCode(404);
-    }
-    public function actionCameOrders($table)
-    {
-        if($this->getModelByName($table) && \Yii::$app->request->isAjax){
-            $model = $this->getModelByName($table)::find()->where(['unique_key'=>\Yii::$app->request->post('key')])->one();
-            $model->came = true;
-            $model->save();
-            return true;
-        }
-        \Yii::$app->response->setStatusCode(404);
+        return $this->render('notification', ['sent_orders'=>$sent_orders, 'came_orders'=>$came_orders, 'return'=>$return, 'issued_order'=>$issued_order]);
     }
 
     public function actionStatistics()

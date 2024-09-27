@@ -111,6 +111,7 @@ class Client extends \yii\db\ActiveRecord implements IdentityInterface
     public function getIssuedOrder()
     {
         $issued = $this->getOrders()->one();
+
         if($issued){
             return $issued->getIssuedOrders();
         }

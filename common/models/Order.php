@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\components\traits\ModelsTrait;
+use DateTime;
 use Yii;
 
 /**
@@ -62,7 +63,7 @@ class Order extends \yii\db\ActiveRecord
     }
     public function get_arrival_date()
     {
-        $date = new \DateTime($this->dispatch_date);
+        $date = new DateTime($this->dispatch_date);
         $days = $this->getBook()->one()->delivery_time_days;
         if($days){
             $date->modify("+$days day");
@@ -78,7 +79,6 @@ class Order extends \yii\db\ActiveRecord
             $this->create_fk(Worker::class, 'worker_id');
             $this->create_fk(Book::class, 'book_id');
             $this->number = uniqid();
-            $this->get_arrival_date();
         }
         if($this->sent){
             $this->get_date('dispatch_date');

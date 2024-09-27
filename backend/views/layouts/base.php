@@ -41,9 +41,6 @@ use yii\helpers\Url;
                 <li class="nav-item dropdown">
                     <a class="nav-link" href="<?=Url::to(['admin/notification'])?>">
                         <i class="far fa-bell"></i>
-                        <!--          !!!!-->
-                        <span class="badge badge-warning navbar-badge"><?=\backend\components\CountNotificationComponent::widget()?></span>
-                        <!--          !!!!-->
                     </a>
                 </li>
                 <li class="nav-item">

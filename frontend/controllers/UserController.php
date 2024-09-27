@@ -2,6 +2,7 @@
 namespace frontend\controllers;
 
 use common\models\Book;
+use common\models\BookReturn;
 use common\models\Client;
 use common\models\Order;
 use common\models\Worker;
@@ -60,6 +61,37 @@ class UserController extends Controller
             }
         }
         return $this->render('design-order', ['model'=>$model]);
+    }
+
+    public function actionShowOrders()
+    {
+        $orders = \Yii::$app->user->identity->getOrders()->all();
+
+        return $this->render('show-orders', ['orders'=>$orders]);
+    }
+
+    public function actionReturnBooks($number)
+    {
+        $model =new BookReturn();
+        $order = Order::findOne(['number'=>$number]);
+        if($order){
+            if(\Yii::$app->request->isPost){
+                $model->load(\Yii::$app->request->post());
+                $model->order_id=$order->id;
+                if($model->save()){
+                    $this->redirect(['profile']);
+                }
+            }
+        }else{
+            \Yii::$app->response->setStatusCode(404);
+        }
+        return $this->render('return-books', ['model'=>$model]);
+    }
+
+    public function actionShowReturn()
+    {
+        $orders = \Yii::$app->user->identity->getOrders()->all();
+        return $this->render('show-return-books', ['orders'=>$orders]);
     }
 
 }

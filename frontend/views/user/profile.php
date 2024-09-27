@@ -25,8 +25,8 @@
                     </div>
                 </div>
                 <div class="links-body-profile">
-                    <div><a href="#" class="btn-main">Заказы</a></div>
-                    <div><a href="#" class="btn-main">Возвраты</a></div>
+                    <div><a href="<?=\yii\helpers\Url::to(['user/show-orders'])?>" class="btn-main">Заказы</a></div>
+                    <div><a href="<?=\yii\helpers\Url::to(['user/show-return'])?>" class="btn-main">Возвраты</a></div>
                 </div>
             </div>
         </div>

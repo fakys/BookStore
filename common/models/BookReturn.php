@@ -45,7 +45,7 @@ class BookReturn extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['order_id', 'worker_id', 'condition_book_id'], 'required'],
+            [['order_id', 'worker_id'], 'required'],
             [['order_id', 'worker_id', 'condition_book_id'], 'default', 'value' => null],
             [['will_return'], 'boolean'],
             [['date_return', 'created_at', 'updated_at'], 'safe'],
@@ -86,6 +86,7 @@ class BookReturn extends \yii\db\ActiveRecord
 
     public function has_returns()
     {
+        $this->create_fk(ConditionBook::class, 'condition_book_id');
         $ConditionBook = ConditionBook::find()->where(['id'=>$this->condition_book_id])->one();
         if(!$ConditionBook||!$ConditionBook->returnable){
             $this->addError('condition_book_id', 'Товар не подлежит к возврату !!');
@@ -96,13 +97,13 @@ class BookReturn extends \yii\db\ActiveRecord
     public function beforeSave($insert)
     {
         if($insert){
-            $this->create_fk(Order::class, 'order_id');
-            $this->create_fk(Worker::class, 'worker_id');
-            $this->create_fk(ConditionBook::class, 'condition_book_id');
             $this->number_returns = uniqid();
             $this->create_unique_key();
-
         }
+        var_dump(123123231);
+        $this->create_fk(Order::class, 'order_id');
+        $this->create_fk(Worker::class, 'worker_id');
+        $this->create_fk(ConditionBook::class, 'condition_book_id');
         if($this->will_return)$this->get_date('date_return');
         $this->checkIssued();
         return parent::beforeSave($insert);
