@@ -21,7 +21,7 @@ return [
             'csrfParam' => '_csrf-backend',
         ],
         'user' => [
-            'identityClass' => 'common\models\User',
+            'identityClass' => 'common\models\Worker',
             'enableAutoLogin' => true,
             'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
         ],
@@ -46,6 +46,7 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                "admin/login"=>'site/login',
                 'admin/show/<table>'=>'admin/show',
                 'admin/create/<table>'=>'admin/create',
                 'admin/show-table/<table>/<key>'=>'admin/show-table',

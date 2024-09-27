@@ -4,6 +4,7 @@ namespace common\models;
 
 use common\components\traits\ModelsTrait;
 use Yii;
+use yii\web\IdentityInterface;
 
 /**
  * This is the model class for table "workers".
@@ -22,12 +23,14 @@ use Yii;
  * @property string|null $updated_at
  *
  */
-class Worker extends \yii\db\ActiveRecord
+class Worker extends \yii\db\ActiveRecord implements IdentityInterface
 {
     use ModelsTrait;
 
-    const CREATE = 'create';
 
+    public $authKey;
+
+    public $rememberMe;
     public $password_confirm;
     /**
      * {@inheritdoc}
@@ -102,5 +105,40 @@ class Worker extends \yii\db\ActiveRecord
         $this->create_unique_key();
         $this->hashPassword();
         return parent::beforeSave($insert);
+    }
+    public function login()
+    {
+        $user = self::find()->where(['email'=>$this->email])->one();
+        if(Yii::$app->security->validatePassword($this->password, $user->password)){
+            if(Yii::$app->user->login($user, $this->rememberMe)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static function findIdentity($id)
+    {
+        return static::findOne($id);
+    }
+
+    public static function findIdentityByAccessToken($token, $type = null)
+    {
+        return static::findOne(['unique_key' => $token]);
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function getAuthKey()
+    {
+        return $this->authKey;
+    }
+
+    public function validateAuthKey($authKey)
+    {
+        return $this->authKey === $authKey;
     }
 }

@@ -2,38 +2,36 @@
 
 namespace backend\controllers;
 
-use common\models\LoginForm;
-use Yii;
-use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
+use common\models\Worker;
 use yii\web\Controller;
-use yii\web\Response;
 
 /**
  * Site controller
  */
 class SiteController extends Controller
 {
-    /**
-     * {@inheritdoc}
-     */
+    public $layout = 'main';
+
+
     public function actions()
     {
-        return [
-            'error' => [
-                'class' => \yii\web\ErrorAction::class,
-            ],
-        ];
+        if(!\Yii::$app->user->isGuest){
+            $this->redirect(['admin/']);
+        }
     }
-
     public function actionIndex()
     {
-        dd(23321);
-        return $this->render('index');
+        $this->redirect(['admin/login']);
     }
-
-    public function actionTest()
+    public function actionLogin()
     {
-        dd(313213);
+        $model = new Worker();
+        if(\Yii::$app->request->post()){
+            $model->load(\Yii::$app->request->post());
+            if($model->login()){
+                return $this->redirect(['admin/']);
+            }
+        }
+        return $this->render('login', ['model'=>$model]);
     }
 }

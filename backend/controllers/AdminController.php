@@ -22,6 +22,8 @@ class AdminController extends Controller
     }
     public function beforeAction($action)
     {
+        if(\Yii::$app->user->isGuest)
+            return  $this->redirect(['site/login']);
         $this->enableCsrfValidation = false;
         return parent::beforeAction($action);
     }
@@ -136,5 +138,9 @@ class AdminController extends Controller
         $orders = Order::find()->andWhere(['and', ['sent'=>true], ['came'=>true]])->asArray()->all();
         $return_books = BookReturn::find()->all();
         return $this->render('statistics', ['clients'=>$clients, 'orders'=>$orders, 'return_books'=>$return_books]);
+    }
+    public function actionLogout()
+    {
+        if(\Yii::$app->user->logout())$this->redirect(['site/login']);
     }
 }
