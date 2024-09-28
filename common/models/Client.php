@@ -59,7 +59,7 @@ class Client extends \yii\db\ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['name', 'surname', 'password_confirm', 'password', 'patronymic', 'passport_series', 'passport_number', 'email'], 'required'],
+            [['name', 'surname', 'password_confirm', 'password', 'passport_series', 'passport_number', 'email'], 'required'],
             [['created_at', 'updated_at'], 'safe'],
             [['name'], 'string', 'max' => 30],
             [['surname', 'patronymic', 'passport_series', 'passport_number', 'email', 'avatar', 'unique_key'], 'string', 'max' => 255],
@@ -137,7 +137,6 @@ class Client extends \yii\db\ActiveRecord implements IdentityInterface
         $percent_without_books=0;
         foreach ($clients as $val){
             $client_issued =$val->getIssuedOrder();
-//            dd($clients[4]->getReturnOrder());
             if($client_issued && count($val->getReturnOrder())<count($val->getOrders()->all())){
                 $client_with_books[]=$val;
             }else{
