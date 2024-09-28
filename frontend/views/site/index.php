@@ -11,7 +11,7 @@
             <h3 class="title">Товары</h3>
             <div class="main-content-block">
                 <?php foreach ($books as $val):?>
-                <div class="product-block">
+                <div class="product-block product-<?=$val['unique_key']?>">
                     <a href="<?=\yii\helpers\Url::to(['product/show/', 'id'=>$val['id']])?>" class="product-image-block">
                         <?php $photos= $val->getBooksPhotos()->asArray()->all(); if($photos):?>
                             <img src="<?=Yii::getAlias('@web').$photos[0]['photo']?>">
@@ -20,7 +20,7 @@
                         <?php endif;?>
                     </a>
                     <div class="text-center">
-                        <div class="link-product">
+                        <div class="link-product name-products" data-key="<?=$val['unique_key']?>">
                             <?=$val['name']?>
                         </div>
                     </div>

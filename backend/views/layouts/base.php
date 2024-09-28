@@ -60,7 +60,7 @@ use yii\helpers\Url;
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <div class="brand-link-container text-center">
                 <a href="<?=Url::to(['/admin'])?>" class="brand-link">
-                    <span class="brand-text font-weight-light">FNS</span>
+                    <span class="brand-text font-weight-light">Books store</span>
                 </a>
             </div>
             <div class="sidebar">
@@ -98,7 +98,7 @@ use yii\helpers\Url;
             </section>
         </div>
         <footer class="main-footer">
-            <strong>FNS &copy; 2014-2024.</strong>
+            <strong>Books store &copy; 2014-2024.</strong>
             <div class="float-right d-none d-sm-inline-block">
                 <b>Version</b> 1.0
             </div>

@@ -6,6 +6,9 @@
 a{
     text-decoration: none;
 }
+.pointer{
+    cursor: pointer;
+}
 .main-logo-header{
     font-size: 30px;
     color: black;
