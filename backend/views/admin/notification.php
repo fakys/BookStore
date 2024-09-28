@@ -139,7 +139,7 @@
                     <tbody>
                     <?php if($issued_order):?>
                         <?php foreach ($issued_order as $order):?>
-                            <?php if(!$order->getIssuedOrders()->one()):?>
+                            <?php if(!$order->getIssuedOrders()->one()&&!$order->getBooksReturn()->one()):?>
                             <?php
                             $order_client = $order->getClient()->asArray()->one();
                             $order_worker = $order->getWorker()->asArray()->one()

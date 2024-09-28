@@ -26,6 +26,8 @@ use Yii;
 class BookReturn extends \yii\db\ActiveRecord
 {
     use ModelsTrait;
+
+    private $statistics = [];
     /**
      * {@inheritdoc}
      */
@@ -100,7 +102,6 @@ class BookReturn extends \yii\db\ActiveRecord
             $this->number_returns = uniqid();
             $this->create_unique_key();
         }
-        var_dump(123123231);
         $this->create_fk(Order::class, 'order_id');
         $this->create_fk(Worker::class, 'worker_id');
         $this->create_fk(ConditionBook::class, 'condition_book_id');
@@ -126,6 +127,16 @@ class BookReturn extends \yii\db\ActiveRecord
             'created_at' => 'Время создания',
             'updated_at' => 'Время обновления',
         ];
+    }
+
+    public function getStatistics()
+    {
+        if($this->statistics) return $this->statistics;
+        $orders = Order::find()->all();
+        $returns = self::find()->all();
+        $percent_returns = round(count($returns)/count($orders)*100);
+        $this->statistics =['percent_returns'=>$percent_returns, 'returns'=>$returns];
+        return $this->statistics;
     }
 
     /**

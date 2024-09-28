@@ -15,7 +15,9 @@ class UserController extends Controller
 
         if($action->id=='profile' && \Yii::$app->user->isGuest)$this->redirect(['user/login']);
 
-        if($action->id=='login'||$action->id=='register' && !\Yii::$app->user->isGuest)$this->redirect(['user/profile']);
+        if($action->id=='login'&& !\Yii::$app->user->isGuest||$action->id=='register' && !\Yii::$app->user->isGuest){
+            dd(!\Yii::$app->user->isGuest);
+        }
         return parent::beforeAction($action);
     }
     public function actionLogin()
@@ -35,11 +37,17 @@ class UserController extends Controller
         $model = new Client();
         if(\Yii::$app->request->post()){
             $model->load(\Yii::$app->request->post());
-            if($model->save() && $model->login()){
+            if($model->save()&&$model->login($model)){
                 return $this->redirect(['user/profile']);
             }
         }
         return $this->render('register', ['model'=>$model]);
+    }
+    public function actionLogout()
+    {
+        if(\Yii::$app->user->logout()){
+            return $this->redirect(['user/login']);
+        }
     }
 
     public function actionProfile()
@@ -74,7 +82,7 @@ class UserController extends Controller
     {
         $model =new BookReturn();
         $order = Order::findOne(['number'=>$number]);
-        if($order){
+        if($order && $order->getIssuedOrders()->one()){
             if(\Yii::$app->request->isPost){
                 $model->load(\Yii::$app->request->post());
                 $model->order_id=$order->id;

@@ -6,6 +6,7 @@ use common\models\Client;
 use common\models\IssuedOrder;
 use common\models\Order;
 use common\models\Position;
+use DeepCopy\f013\C;
 use yii\web\Controller;
 
 class AdminController extends Controller
@@ -101,10 +102,9 @@ class AdminController extends Controller
 
     public function actionStatistics()
     {
-        $clients = Client::find()->all();
-        $orders = Order::find()->andWhere(['and', ['sent'=>true], ['came'=>true]])->asArray()->all();
-        $return_books = BookReturn::find()->all();
-        return $this->render('statistics', ['clients'=>$clients, 'orders'=>$orders, 'return_books'=>$return_books]);
+        $model = new Client();
+        $return= new BookReturn();
+        return $this->render('statistics', ['model'=>$model, 'return'=>$return]);
     }
     public function actionLogout()
     {

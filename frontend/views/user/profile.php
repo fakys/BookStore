@@ -5,6 +5,7 @@
  */
 ?>
 
+<?php if($user):?>
 <div class="page-profile">
     <div class="profile-block-container">
         <div class="title-profile-block">Профиль</div>
@@ -20,9 +21,9 @@
                 <div class="user-data">Логин: <?=$user->name?></div>
                 <div class="user-data">Email: <?=$user->email?></div>
                 <div class="mt-3">
-                    <div class="btn btn-danger p-1 logout-profile-btn">
+                    <a href="<?=\yii\helpers\Url::to(['user/logout'])?>" class="btn btn-danger p-1 logout-profile-btn">
                         Выйти
-                    </div>
+                    </a>
                 </div>
                 <div class="links-body-profile">
                     <div><a href="<?=\yii\helpers\Url::to(['user/show-orders'])?>" class="btn-main">Заказы</a></div>
@@ -31,17 +32,5 @@
             </div>
         </div>
     </div>
-    <div class="logout-menu-container">
-        <div class="logout-menu">
-            <div class="title-logout-menu">
-                Вы уверены что хотите выйти?
-            </div>
-            <div class="body-logout-menu">
-                <a href="<?=\yii\helpers\Url::to(['user/logout'])?>" class="btn btn-danger">Выйти</a>
-                <div class="btn-main d-flex align-items-center">
-                    Назад
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
+<?php endif;?>

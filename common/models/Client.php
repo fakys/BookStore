@@ -30,6 +30,8 @@ class Client extends \yii\db\ActiveRecord implements IdentityInterface
     public $password_confirm;
     public $authKey;
     public $rememberMe;
+
+    private $client_statistics=[];
     /**
      * {@inheritdoc}
      */
@@ -103,23 +105,16 @@ class Client extends \yii\db\ActiveRecord implements IdentityInterface
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getOrders()
-    {
-        return $this->hasMany(Order::class, ['client_id' => 'id']);
-    }
 
-    public function getIssuedOrder()
-    {
-        $issued = $this->getOrders()->one();
 
-        if($issued){
-            return $issued->getIssuedOrders();
+    public function login($model='')
+    {
+        if($model){
+            if(Yii::$app->user->login($model, $this->rememberMe)){
+                return true;
+            }
+            return false;
         }
-        return [];
-    }
-
-    public function login()
-    {
         $user = self::find()->where(['email'=>$this->email])->one();
         if(Yii::$app->security->validatePassword($this->password, $user->password)){
             if(Yii::$app->user->login($user, $this->rememberMe)){
@@ -128,6 +123,35 @@ class Client extends \yii\db\ActiveRecord implements IdentityInterface
         }
         $this->addError('email', 'Не верный логин или пароль');
         return false;
+    }
+
+    public function get_statistics(): array
+    {
+        if($this->client_statistics){
+            return  $this->client_statistics;
+        }
+        $clients = self::find()->all();
+        $client_with_books=[];
+        $client_without_books=[];
+        $percent_with_books=0;
+        $percent_without_books=0;
+        foreach ($clients as $val){
+            $client_issued =$val->getIssuedOrder();
+//            dd($clients[4]->getReturnOrder());
+            if($client_issued && count($val->getReturnOrder())<count($val->getOrders()->all())){
+                $client_with_books[]=$val;
+            }else{
+                $client_without_books[]=$val;
+            }
+        }
+        if($clients&&$client_with_books){
+            $percent_with_books = round(count($client_with_books)/count($clients)*100);
+        }
+        if($clients&&$client_without_books){
+            $percent_without_books = round(count($client_without_books)/count($clients)*100);
+        }
+        $this->client_statistics = ['client_with_books'=>$client_with_books, 'percent_with_books'=>$percent_with_books, 'client_without_books'=>$client_without_books, 'percent_without_books'=>$percent_without_books];
+        return $this->client_statistics ;
     }
 
 
@@ -154,5 +178,40 @@ class Client extends \yii\db\ActiveRecord implements IdentityInterface
     public function validateAuthKey($authKey)
     {
         return $this->authKey === $authKey;
+    }
+
+    public function getOrders()
+    {
+        return $this->hasMany(Order::class, ['client_id' => 'id']);
+    }
+    public function getIssuedOrder()
+    {
+        $orders = $this->getOrders()->all();
+        $arr_issued=[];
+        if($orders){
+            foreach ($orders as $order){
+                $issued = $order->getIssuedOrders();
+                if($issued){
+                    $arr_issued[] = $issued;
+                }
+            }
+
+        }
+        return $arr_issued;
+    }
+    public function getReturnOrder()
+    {
+        $orders = $this->getOrders()->all();
+        $arr_issued=[];
+        if($orders){
+            foreach ($orders as $order){
+                $issued = $order->getBooksReturn()->one();
+                if($issued){
+                    $arr_issued[] = $issued;
+                }
+            }
+
+        }
+        return $arr_issued;
     }
 }

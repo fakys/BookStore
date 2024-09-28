@@ -12,7 +12,7 @@
             <th scope="col">Номер</th>
             <th scope="col">Книга</th>
             <th scope="col">Дата прихода</th>
-            <th scope="col">Дата заказа</th>
+            <th scope="col">Дата отправки</th>
             <th scope="col">Сотрудник</th>
             <th scope="col">Возврат</th>
         </tr>
@@ -29,7 +29,11 @@
                 <?php $worker = $order->getWorker()->one(); if($worker):?>
                     <td><?=$worker->surname?></td>
                 <?php endif;?>
-                <td><a href="<?=\yii\helpers\Url::to(['user/return-books', 'number'=>$order->number])?>" class="btn btn-success p-1">Возврат</a></td>
+                <td>
+                    <?php if($order->getIssuedOrders()->one()):?>
+                    <a href="<?=\yii\helpers\Url::to(['user/return-books', 'number'=>$order->number])?>" class="btn btn-success p-1">Возврат</a>
+                    <?php endif;?>
+                </td>
             </tr>
         <?php endforeach;?>
         </tbody>
