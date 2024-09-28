@@ -1,4 +1,7 @@
 # yii console commands
+/yii
+/yii_test
+/yii_test.bat
 
 # phpstorm project files
 .idea
@@ -15,6 +18,7 @@ nbproject
 Thumbs.db
 
 # composer vendor dir
+/vendor
 
 # composer itself is not needed
 composer.phar
@@ -31,3 +35,9 @@ phpunit.phar
 /.vagrant
 
 # ignore generated files
+/frontend/web/index.php
+/frontend/web/index-test.php
+/frontend/web/robots.txt
+/backend/web/index.php
+/backend/web/index-test.php
+/backend/web/robots.txt
